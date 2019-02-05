@@ -1,0 +1,61 @@
+| <%= form_with(model: project, local: true) do |form| %> <% if project.errors.any? %> 
+#error_explanation
+  h2
+    | <%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:
+  ul
+    |  <% project.errors.full_messages.each do |message| %> 
+    li
+      | <%= message %>
+    |  <% end %> 
+|  <% end %> 
+.field
+  |  <%= form.label :name %> <%= form.text_field :name %> 
+.field
+  |  <%= form.label :profile %> <%= form.text_field :profile %> 
+.field
+  |  <%= form.label :category %> <%= form.text_field :category %> 
+.field
+  |  <%= form.label :location %> <%= form.text_field :location %> 
+.field
+  |  <%= form.label :title %> <%= form.text_field :title %> 
+.field
+  |  <%= form.label :image %> <%= form.text_field :image %> 
+.field
+  |  <%= form.label :youtube %> <%= form.text_field :youtube %> 
+.field
+  |  <%= form.label :vimeo %> <%= form.text_field :vimeo %> 
+.field
+  |  <%= form.label :images %> <%= form.number_field :images %> 
+.field
+  |  <%= form.label :shares %> <%= form.number_field :shares %> 
+.field
+  |  <%= form.label :amount %> <%= form.text_field :amount %> 
+.field
+  |  <%= form.label :goal %> <%= form.text_field :goal %> 
+.field
+  |  <%= form.label :pounds %> <%= form.text_field :pounds %> 
+.field
+  |  <%= form.label :goal_pounds %> <%= form.text_field :goal_pounds %> 
+.field
+  |  <%= form.label :backers %> <%= form.number_field :backers %> 
+.field
+  |  <%= form.label :days %> <%= form.number_field :days %> 
+.field
+  |  <%= form.label :time %> <%= form.text_field :time %> 
+.field
+  |  <%= form.label :trending %> <%= form.check_box :trending %> 
+.field
+  |  <%= form.label :english %> <%= form.check_box :english %> 
+.field
+  |  <%= form.label :story_text %> <%= form.text_area :story_text %> 
+.field
+  |  <%= form.label :story_html %> <%= form.text_area :story_html %> 
+.field
+  |  <%= form.label :updates %> <%= form.number_field :updates %> 
+.field
+  |  <%= form.label :created_at %> <%= form.datetime_select :created_at %> 
+.field
+  |  <%= form.label :fb_shares %> <%= form.number_field :fb_shares %> 
+.actions
+  |  <%= form.submit %> 
+|  <% end %> 
