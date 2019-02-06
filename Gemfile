@@ -20,6 +20,8 @@ end
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem "better_errors"
+  gem "binding_of_caller"
   # gem 'spring'
   # gem 'spring-watcher-listen', '~> 2.0.0'
 end
@@ -35,8 +37,10 @@ gem 'webpacker'
 gem 'react-rails'
 gem 'slim-rails'
 gem 'bootstrap', '~> 4.2.1'
-gem 'jquery-rails'
+gem 'jquery-rails', :git => 'https://github.com/rails/jquery-rails.git'
 gem 'textmood', :git => 'https://github.com/stiang/textmood.git'
 gem 'textstat'
 gem 'word_count_analyzer'
 gem 'sentimental'
+gem "font-awesome-rails"
+gem 'will_paginate', '~> 3.1.0'
