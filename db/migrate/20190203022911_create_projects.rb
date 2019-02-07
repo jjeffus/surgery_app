@@ -1,11 +1,13 @@
 class CreateProjects < ActiveRecord::Migration[5.2]
   def change
     create_table :projects do |t|
+      t.string :gofundme_key
+      t.string :gofundme_category
+      t.boolean :completed, :default => false
+      t.string :title
       t.string :name
       t.string :profile
-      t.string :category
       t.string :location
-      t.string :title
       t.string :image
       t.string :youtube
       t.string :vimeo
@@ -34,6 +36,9 @@ class CreateProjects < ActiveRecord::Migration[5.2]
       t.integer :updates_count
       t.datetime :created_at
       t.integer :fb_shares
+      t.boolean :hearted
+      t.integer :star_rating
+      t.string :category
 
       t.timestamps
     end

@@ -1,7 +1,13 @@
 class HomeController < ApplicationController
   def index
-    respond_to do |format|
-      format.html
-    end 
+    @page = params[:page] || 1
+    @cursor = params[:cursor] || 0
+    if params.has_key? :page
+      respond_to do |format|
+        format.html
+      end
+    else
+      redirect_to controller: 'home', action: 'index', page: @page, cursor: @cursor
+    end
   end
 end

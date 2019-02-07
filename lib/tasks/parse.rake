@@ -14,19 +14,27 @@ namespace :data do
     analyzer.load_defaults
     cnt = 0
     Dir["/home/janet/dev/surgeryresearch/pages/*"].to_a.each do |file|
-      cnt += 1
-    end
-    puts "Cnt: #{cnt}"
-    cnt = 0
-    Dir["/home/janet/dev/surgeryresearch/pages/*"].to_a.each do |file|
       begin
-        puts "Working on: #{file}: #{cnt}"
+        key = file.split("/").last
+        puts "Working on: #{key}: #{cnt}"
         cnt += 1
         nok = Nokogiri::HTML(File.read(file))
         p = Project.new
+        p.completed = false
+        p.gofundme_key = key
         p.title = ''
+        p.name = ''
         nok.xpath("//h1[@class='campaign-title']").each do |h1|
           p.title = h1.inner_text.strip
+        end
+        if p.title == ''
+          nok.xpath("//h1[@class='campaign-title pb']").each do |h1|
+            p.title = h1.inner_text.strip
+          end
+        end
+        if p.title == nil
+          puts "No title found! Exiting..."
+          next
         end
         nok.xpath("//img[@class='campaign-img']").each do |tag|
           p.image = tag.attr('src')
@@ -53,24 +61,39 @@ namespace :data do
         p.pounds = 0
         p.goal = 0
         p.goal_pounds = 0
-        nok.xpath("//h2[@class='goal']").each do |h2|
-          p.amount = h2.xpath("./strong").first.inner_text.strip
-          if p.amount =~ /^\$(.*)/
+        nok.xpath("//h2[@class='goal']|//h2[@class='goal mb0']").each do |h2|
+          amount = 0
+          h2.xpath("./strong").each do |h2|
+            amount = h2.inner_text.strip
+          end
+          if amount =~ /^\$(.*)/
             p.amount = $1.gsub(/,/, '').to_f
-          elsif p.amount =~ /^£(.*)/
+          elsif amount =~ /^£(.*)/
             p.pounds = $1.gsub(/,/, '').to_f
             p.amount = p.pounds * 1.31
           end
-          p.goal = h2.xpath("./span").first.inner_text.strip
-          if p.goal =~ /of \$((?:\d+|[,.])+)/
+          goal = 0
+          h2.xpath("./span").each do |span|
+            goal = span.inner_text.strip
+          end
+          if goal =~ /of \$((?:\d+|[,.])+)/
             p.goal = $1.gsub(/,/, '').to_f
-          elsif p.goal =~ /of £((?:\d+|[,.])+)/
+          elsif goal =~ /of £((?:\d+|[,.])+)/
             p.goal_pounds = $1.gsub(/,/, '').to_f
             p.goal = p.goal_pounds * 1.31
           else
             # no donations yet
-            p.goal = p.amount
-            p.amount = nil
+            if h2.attr('class') =~ /mb0/
+              p.completed = true
+              nok.xpath("//title").each do |title|
+                if title.inner_text.strip =~ /Fundraiser by ([^:]+):/
+                  p.name = $1.strip
+                end
+              end
+            else
+              p.goal = p.amount
+              p.amount = nil
+            end
           end
         end
         p.backers = 0
@@ -134,15 +157,14 @@ namespace :data do
           p.fb_shares = strong.inner_text.strip
         end
 
-        p.name = ''
         p.profile = ''
         nok.xpath("//a[@class='js-profile-co']").each do |a|
           p.name = a.inner_text.strip
           p.profile = a.attr('href')
         end
-        p.category = ''
+        p.gofundme_category = ''
         nok.xpath("//a[@class='icon-link category-link-name js-category-link']/span").each do |span|
-          p.category = span.inner_text.strip
+          p.gofundme_category = span.inner_text.strip
         end
         p.location= ''
         nok.xpath("//a[@class='icon-link location-name js-location-link']").each do |a|
@@ -178,38 +200,37 @@ namespace :data do
           u.save!
           i += 1
         end
-        # puts "Name: #{p.name}"
-        # puts "Profile: #{p.profile}"
-        # puts "Category: #{p.category}"
-        # puts "Location: #{p.location}"
-        puts "#{cnt}: Title: #{p.title}"
-        # puts "Image: #{p.image}"
-        # puts "YouTube: #{p.youtube}"
-        # puts "Vimeo: #{p.vimeo}"
-        # puts "Images: #{p.images}"
-        # puts "Shares: #{p.shares}"
-        # puts "Amount: #{p.amount}"
-        # puts "Goal: #{p.goal}"
-        # puts "Pounds: #{p.pounds}"
-        # puts "Goal pounds: #{p.goal_pounds}"
-        # puts "Backers: #{p.backers}"
-        # puts "Days: #{p.days}"
-        # puts "Time: #{p.time}"
-        # puts "Trending: #{p.trending}"
-        # puts "English: #{p.english}"
+         puts "#{cnt}: Title: #{p.title}"
+         #puts "Name: #{p.name}"
+         #puts "Profile: #{p.profile}"
+         #puts "Category: #{p.gofundme_category}"
+         #puts "Location: #{p.location}"
+         #puts "Image: #{p.image}"
+         #puts "YouTube: #{p.youtube}"
+         #puts "Vimeo: #{p.vimeo}"
+         #puts "Images: #{p.images}"
+         #puts "Shares: #{p.shares}"
+         #puts "Amount: #{p.amount}"
+         #puts "Goal: #{p.goal}"
+         #puts "Pounds: #{p.pounds}"
+         #puts "Goal pounds: #{p.goal_pounds}"
+         #puts "Backers: #{p.backers}"
+         #puts "Days: #{p.days}"
+         #puts "Time: #{p.time}"
+         #puts "Trending: #{p.trending}"
+         #puts "English: #{p.english}"
         # puts "Story text: #{p.story_text}"
-        # puts "flesch_reading_ease: #{p.flesch_reading_ease}"
-        # puts "dale_chall_readability_score: #{p.dale_chall_readability_score}"
-        # puts "smog_index: #{p.smog_index}"
-        # puts "difficult_words: #{p.difficult_words}"
-        # puts "word_count: #{p.word_count}"
-        # puts "textmood_score: #{p.textmood_score}"
-        # puts "sentimental_score: #{p.sentimental_score}"
-        # puts "sentiment: #{p.sentiment}"
-        # puts ""
-        # puts "Updates: #{p.updates_count}"
-        # puts "Created at: #{p.created_at}"
-        # puts "FB Shares: #{p.fb_shares}"
+         #puts "flesch_reading_ease: #{p.flesch_reading_ease}"
+         #puts "dale_chall_readability_score: #{p.dale_chall_readability_score}"
+         #puts "smog_index: #{p.smog_index}"
+         #puts "difficult_words: #{p.difficult_words}"
+         #puts "word_count: #{p.word_count}"
+         #puts "textmood_score: #{p.textmood_score}"
+         #puts "sentimental_score: #{p.sentimental_score}"
+         #puts "sentiment: #{p.sentiment}"
+         #puts "Updates: #{p.updates_count}"
+         #puts "Created at: #{p.created_at}"
+         #puts "FB Shares: #{p.fb_shares}"
       rescue Exception => e
         puts "Exception: #{e}: #{e.backtrace}"
         puts "File: #{file}: cnt: #{cnt}"

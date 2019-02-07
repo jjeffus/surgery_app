@@ -1,9 +1,8 @@
 class Api::V1::ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
-
   def index
     @page = params[:page].to_i
     @projects = Project.paginate(:page => @page)
+    logger.info "Projects: #{@projects.length}"
     render 'index'
   end
 
@@ -25,6 +24,6 @@ class Api::V1::ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:name, :profile, :category, :location, :title, :image, :youtube, :vimeo, :images, :shares, :amount, :goal, :pounds, :goal_pounds, :backers, :days, :time, :trending, :english, :story_text, :story_html, :updates, :created_at, :fb_shares)
+    params.require(:project).permit(:name, :profile, :category, :location, :title, :image, :youtube, :vimeo, :images, :shares, :amount, :goal, :pounds, :goal_pounds, :backers, :days, :time, :trending, :english, :story_text, :story_html, :updates, :created_at, :fb_shares, :hearted, :star_rating)
   end
 end
