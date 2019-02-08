@@ -43,7 +43,21 @@ class Projects extends React.Component {
 
   componentDidUpdate(){
     var pagination = this.state.pagination;
-    var star_rating = this.state.projects[pagination.cursor].star_rating;
+    window.location.hash = pagination.cursor;
+    var project = this.state.projects[pagination.cursor];
+    var star_rating = project.star_rating;
+    var category = project.category;
+    var hearted = project.hearted;
+    $('[data-toggle="buttons"] :radio').prop('checked', false);
+    $('[data-toggle="buttons"] label').removeClass('active');
+    $('#'+category).click();
+    if (hearted) {
+      $('#heart').attr('class', "btn btn-dark active");
+      $('#heart input').prop('checked', 'checked');
+    } else {
+      $('#heart').attr('class', "btn btn-dark");
+      $('#heart input').removeAttr('checked');
+    }
     $.each($('input[name="rating"]'), function(i,e){
       if ($(e).attr('id') != 'star'+star_rating) {
         $(e).removeAttr('checked');
@@ -61,6 +75,7 @@ class Projects extends React.Component {
   render () {
     var state = this.state;
     var p = state.projects;
+    var badges = [];
     var projects = [];
     var image = '';
     var mtf = '';
@@ -69,18 +84,6 @@ class Projects extends React.Component {
     var hearted = '';
     $.each(p, function(i,e){
       if (i == state.pagination.cursor) {
-        if (p[i].category) {
-          if (p[i].category == 'mtf') {
-            mtf = ' active';
-          } else if (p[i].category == 'ftm') {
-            ftm = ' active';
-          } else if (p[i].category == 'deleted') {
-            deleted = ' active';
-          }
-        }
-        if (p[i].hearted == true) {
-          hearted = ' active';
-        }
         if (p[i].image) {
           image = (<img alt="" class="img-fluid mx-auto d-block" src={p[i].image} />)
         } else if (p[i].youtube) {
@@ -88,6 +91,27 @@ class Projects extends React.Component {
         } else if (p[i].vimeo) {
           image = (<iframe media_type='2' class='img-fluid mx-auto d-block' src={p[i].vimeo} frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>);
         }
+        badges.push(
+          <h5 class="justify-content-center badges">
+            <a href="#" class="badge badge-success" title="amount">{p[i].amount ? "A: "+p[i].amount : ''}</a>
+            <a href="#" class="badge badge-secondary"  title="goal">{p[i].goal ? "G: "+p[i].goal : ''}</a>
+            <a href="#" class="badge badge-primary" title="links">{p[i].links ? "l: "+p[i].links : ''}</a>
+            <a href="#" class="badge badge-danger" title="flesch_reading_ease">{p[i].flesch_reading_ease ? "f: "+p[i].flesch_reading_ease.toFixed(2) : ''}</a>
+            <a href="#" class="badge badge-warning" title="smog_index">{p[i].smog_index ? "sm: "+p[i].smog_index.toFixed(2) : ''}</a>
+            <a href="#" class="badge badge-info" title="difficult_words">{p[i].difficult_words ? "dw: "+p[i].difficult_words : ''}</a>
+            <a href="#" class="badge badge-dark" title="word_count">{p[i].word_count ? "wc: "+p[i].word_count : ''}</a>
+            <a href="#" class="badge badge-pill badge-primary" title="textmood_score">{p[i].textmood_score ? "tm: "+p[i].textmood_score.toFixed(2) : ''}</a>
+            <a href="#" class="badge badge-pill badge-danger" title="sentimental_score">{p[i].sentimental_score ? "ss: "+p[i].sentimental_score.toFixed(2) : ''}</a>
+            <a href="#" class="badge badge-pill badge-info" title="sentiment">{p[i].sentiment ? "s: "+p[i].sentiment : ''}</a>
+            <a href="#" class="badge badge-pill badge-warning" title="updates_count">{p[i].updates_count ? "uc: "+p[i].updates_count : ''}</a>
+            <a href="#" class="badge badge-pill badge-secondary" title="fb_shares">{p[i].fb_shares ? "fb: "+p[i].fb_shares : ''}</a>
+            <a href="#" class="badge badge-pill badge-dark" title="images">{p[i].images ? "i: "+p[i].images : ''}</a>
+            <a href="#" class="badge badge-success" title="trending">{p[i].trending ? "Trending" : ''}</a>
+            <a href={"https://www.gofundme.com/"+p[i].gofundme_key} class="badge badge-primary" targer="_blank">Link</a>
+            <a href="#" class="badge badge-info" title="backers">{p[i].backers ? "b: "+p[i].backers : ''}</a>
+            <a href="#" class="badge badge-light" title="time">{p[i].time ? "t: "+p[i].time : ''}</a>
+          </h5>
+        );
         projects.push(
           <section class="project" key={p[i].gofundme_key} id={"project"+i} data-id={p[i].id}>
             <div class="container">
@@ -109,18 +133,18 @@ class Projects extends React.Component {
               <i class="fa fa-caret-left"></i>
             </button>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class={"btn btn-secondary"+ftm} onClick={() => this.categorize()}>
+              <label class="btn btn-secondary" onClick={() => this.categorize()}>
                 <input type="radio" name="category" id="ftm" autocomplete="off" /> <i class="fa fa-male"></i>
               </label>
-              <label class={"btn btn-secondary"+mtf} onClick={() => this.categorize()}>
+              <label class="btn btn-secondary" onClick={() => this.categorize()}>
                 <input type="radio" name="category" id="mtf" autocomplete="off" /> <i class="fa fa-female"></i>
               </label>
-              <label class={"btn btn-secondary"+deleted} onClick={() => this.categorize()}>
+              <label class="btn btn-secondary" onClick={() => this.categorize()}>
                 <input type="radio" name="category" id="deleted" autocomplete="off" /> <i class="fa fa-trash"></i>
               </label>
             </div>
             <div class="btn-group-toggle" data-toggle="buttons">
-              <label id="heart" class={"btn btn-dark"+hearted} onClick={() => this.heart()}>
+              <label id="heart" class="btn btn-dark" onClick={() => this.heart()}>
                 <input type="checkbox" autocomplete="off" /><i class="fa fa-heart"></i>
               </label>
             </div>
@@ -129,6 +153,7 @@ class Projects extends React.Component {
             </button>
           </form>
         </nav>
+        {badges}
         <div class="container">
         	<div class="row justify-content-center">
         	  <div class="rating">

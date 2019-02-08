@@ -5,11 +5,16 @@
 .controls button {
   width: 16.66667;
 }
+.badges {
+  width: 375px;
+  margin: 0 auto;
+  text-align: center;
+}
 body {
   padding-top: 0;
 }
 #image img {
-  height: 400px;
+  width: 375px;
 }
 label#heart.active {
   color: red;

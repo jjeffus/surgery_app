@@ -1,8 +1,8 @@
 class Api::V1::ProjectsController < ApplicationController
   def index
     @page = params[:page].to_i
-    @projects = Project.paginate(:page => @page)
-    logger.info "Projects: #{@projects.length}"
+    # @projects = Project.where('english > 0 and category in ("mtf", "ftm") or category is null').paginate(:page => @page)
+    @projects = Project.where('english > 0 and category is null').paginate(:page => @page)
     render 'index'
   end
 
