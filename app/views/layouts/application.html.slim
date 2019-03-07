@@ -1,16 +1,140 @@
 doctype html
-html[lang="en"]
+html.no-js[lang="zxx"]
   head
-    meta[charset="utf-8"]
     meta[name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"]
+    link[rel="shortcut icon" href="img/fav.png"]
+    meta[name="author" content="codepixer"]
     meta[name="description" content=""]
-    meta[name="author" content=""]
+    meta[name="keywords" content=""]
+    meta[charset="UTF-8"]
+    title
+      | SurgeryFor.life
+    link[href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Roboto:300,400,500,700" rel="stylesheet"]
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application'
-    title
-      | Categorize GoFundMe
   body
-    = yield
+    header#header
+      .container
+        .row.align-items-center.justify-content-between.d-flex
+          #logo
+            a[href="index.html"]
+              = image_tag "logo"
+          nav#nav-menu-container
+            ul.nav-menu
+              li.menu-active
+                a[href="/"]
+                  | Home
+              li
+                a[href="/janet"]
+                  | Janet
+    section.home-banner-area.relative
+      .container-fluid
+        .row.d-flex.align-items-center.justify-content-center
+          .header-left.col-lg-5.col-md-6
+            h1
+              |  Reach
+              br
+              |  your goal!
+            p.pt-20.pb-20
+              |  Get the help you need with your GoFundMe campaign to reach your goal in record time. Enter your GoFundMe campaign in the form provided.
+          .col-lg-7.col-md-6.col-sm-8.header-right
+            .owl-carousel.owl-banner
+              = image_tag "transgender-1", :class => "img-fluid w-100"
+            .form-wrap
+              p.mb-20.text-white
+                | Enter Your GoFundMe Page
+              form.form[role="form" autocomplete="off"]
+                .row
+                  .col-md-7.wrap-left.donation-input
+                    .form-group
+                      input.form-control[type="text" placeholder="https://www.gofundme.com/my-gofundme" onfocus="this.placeholder = ''" onblur="this.placeholder = 'https://www.gofundme.com/my-gofundme'"]
+                  .col-md-5.wrap-right
+                    .input-group.dates-wrap
+                      button.primary-btn.white[type="submit"]
+                        | Check
+      section.condition-area.event-details-area.section-gap
+        .container
+          .row.align-items-center.justify-content-center
+            .col-lg-6.col-md-8.col-sm-10
+              .condition-left
+                img.img-fluid[src="/assets/events/ed1.jpg" alt=""]
+            .offset-lg-1.col-lg-5
+              .condition-right
+                h2
+                  |  Spreading Peace
+                  brimg
+                  |  Around the Worldwide
+                p
+                  |  If you are looking at blank cassettes on the web, you may be very confused at the difference in price You may see some for as low as each. If you are looking at blank cassettes on the web, you may be very confused at the difference in price You may see.
+                p
+                  |  If you are looking at blank cassettes on the web, you may be very confused at the difference in price You may see some for as low as each. If you are looking at blank cassettes on the web, you may be very confused at the difference in price You may see.
+                ul
+                  li
+                    | Saturday, 15th September, 2018
+                  li
+                    | Rocky beach Church
+                  li
+                    | Los Angeles, USA.
+      section.causes-area.section-gap
+        .container
+          .row.justify-content-center
+            .col-md-7.section-title
+              h2
+                | Our Major Causes
+              p
+                |  The French Revolution constituted for the conscience of the dominant aristocratic class a fall from innocence the natural chain of events.
+          .row
+            .col-lg-12.col-md-6
+              .single-cause
+                #content
+                  | Is here
+    footer.footer-area.section-gap
+      .container
+        .row
+          .col-lg-5.col-md-6.col-sm-6
+            .single-footer-widget
+              h6
+                | About Us
+              p
+                |  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.
+              p.footer-text
+                |  Copyright ©
+                script
+                  | document.write(new Date().getFullYear());
+                |  All rights reserved | This template is made with
+                i.fa.fa-heart-o[aria-hidden="true"]
+                |  by
+                a[href="https://colorlib.com" target="_blank"]
+                  | Colorlib
+          .col-lg-5.col-md-6.col-sm-6
+            .single-footer-widget
+              h6
+                | Newsletter
+              p
+                | Stay update with our latest
+              #mc_embed_signup
+                form.form-inline[target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get"]
+                  input.form-control[name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '" required="" type="email"]
+                  button.click-btn.btn.btn-default
+                    i.fa.fa-long-arrow-right[aria-hidden="true"]
+                  div[style="position: absolute; left: -5000px;"]
+                    input[name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text"]
+                  .info
+          .col-lg-2.col-md-6.col-sm-6.social-widget
+            .single-footer-widget
+              h6
+                | Follow Us
+              p
+                | Let us be social
+              .footer-social.d-flex.align-items-center
+                a[href="#"]
+                  i.fa.fa-facebook
+                a[href="#"]
+                  i.fa.fa-twitter
+                a[href="#"]
+                  i.fa.fa-dribbble
+                a[href="#"]
+                  i.fa.fa-behance

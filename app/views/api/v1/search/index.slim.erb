@@ -1,0 +1,116 @@
+p#notice
+  | <%= notice %>
+h1
+  | Projects
+table
+  thead
+    tr
+      th
+        | Name
+      th
+        | Profile
+      th
+        | Category
+      th
+        | Location
+      th
+        | Title
+      th
+        | Image
+      th
+        | Youtube
+      th
+        | Vimeo
+      th
+        | Images
+      th
+        | Shares
+      th
+        | Amount
+      th
+        | Goal
+      th
+        | Pounds
+      th
+        | Goal pounds
+      th
+        | Backers
+      th
+        | Days
+      th
+        | Time
+      th
+        | Trending
+      th
+        | English
+      th
+        | Story text
+      th
+        | Story html
+      th
+        | Updates
+      th
+        | Created at
+      th
+        | Fb shares
+      th[colspan="3"]
+  tbody
+    |  <% @projects.each do |project| %> 
+    tr
+      td
+        | <%= project.name %>
+      td
+        | <%= project.profile %>
+      td
+        | <%= project.category %>
+      td
+        | <%= project.location %>
+      td
+        | <%= project.title %>
+      td
+        | <%= project.image %>
+      td
+        | <%= project.youtube %>
+      td
+        | <%= project.vimeo %>
+      td
+        | <%= project.images %>
+      td
+        | <%= project.shares %>
+      td
+        | <%= project.amount %>
+      td
+        | <%= project.goal %>
+      td
+        | <%= project.pounds %>
+      td
+        | <%= project.goal_pounds %>
+      td
+        | <%= project.backers %>
+      td
+        | <%= project.days %>
+      td
+        | <%= project.time %>
+      td
+        | <%= project.trending %>
+      td
+        | <%= project.english %>
+      td
+        | <%= project.story_text %>
+      td
+        | <%= project.story_html %>
+      td
+        | <%= project.updates %>
+      td
+        | <%= project.created_at %>
+      td
+        | <%= project.fb_shares %>
+      td
+        | <%= link_to 'Show', project %>
+      td
+        | <%= link_to 'Edit', edit_project_path(project) %>
+      td
+        | <%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %>
+    |  <% end %> 
+br
+|  <%= link_to 'New Project', new_project_path %> 

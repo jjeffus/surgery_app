@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_04_172421) do
+ActiveRecord::Schema.define(version: 2019_03_07_204823) do
 
   create_table "projects", force: :cascade do |t|
     t.string "gofundme_key"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2019_02_04_172421) do
     t.boolean "english"
     t.text "story_text"
     t.text "story_html"
-    t.integer "links"
+    t.integer "link_count"
     t.integer "flesch_reading_ease"
     t.integer "dale_chall_readability_score"
     t.integer "smog_index"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 2019_02_04_172421) do
     t.integer "star_rating"
     t.string "category"
     t.datetime "updated_at", null: false
+    t.float "euros"
+    t.float "goal_euros"
   end
 
   create_table "updates", force: :cascade do |t|
@@ -60,7 +62,7 @@ ActiveRecord::Schema.define(version: 2019_02_04_172421) do
     t.string "time_ago"
     t.text "update_html"
     t.text "update_text"
-    t.integer "links"
+    t.integer "link_count"
     t.integer "flesch_reading_ease"
     t.integer "dale_chall_readability_score"
     t.integer "smog_index"
