@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_204823) do
+ActiveRecord::Schema.define(version: 2019_03_07_212827) do
 
   create_table "projects", force: :cascade do |t|
     t.string "gofundme_key"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2019_03_07_204823) do
     t.datetime "updated_at", null: false
     t.float "euros"
     t.float "goal_euros"
+    t.boolean "listed", default: true
   end
 
   create_table "updates", force: :cascade do |t|

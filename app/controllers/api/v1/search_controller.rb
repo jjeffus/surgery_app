@@ -2,8 +2,10 @@ class Api::V1::SearchController < ApplicationController
   def index
     @url = params[:url]
     data = Gofundme::Project.scrape(@url)
-    @project = Project.new_from_gofundme(data.to_hash)
-    if @project
+    if data
+      @project = Project.new_from_gofundme(data.to_hash)
+      @project.listed = params[:listed] || true
+      @project.save!
       @code = 200
       @message = "Success"
     else

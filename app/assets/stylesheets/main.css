@@ -4,7 +4,7 @@
 /* Mobile Layout: 320px */
 /* Wide Mobile Layout: 480px */
 /* =================================== */
-/*  Basic Style 
+/*  Basic Style
 /* =================================== */
 ::-moz-selection {
   /* Code for Firefox */
@@ -1537,10 +1537,11 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 5px; }
   @media (max-width: 1024px) {
     #header {
-      background: #222222; } }
+      /* background: #222222; */
+      } }
 
 #header.header-scrolled {
-  background: rgba(0, 0, 0, 0.8);
+  /* background: rgba(0, 0, 0, 0.8); */
   transition: all 0.5s; }
 
 @media (max-width: 673px) {
@@ -2189,7 +2190,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 .condition-right li {
   padding-left: 21px; }
 .condition-right li:before {
-  content: "\e87a";
+  content: "";
   font-family: 'Linearicons-Free';
   display: inline-block;
   margin-left: -22px;
@@ -2313,11 +2314,11 @@ body.mobile-nav-active #mobile-nav-toggle {
       color: #a978e0; }
 
 .event-details-area .condition-right li:nth-child(1)::before {
-  content: "\e836"; }
+  content: ""; }
 .event-details-area .condition-right li:nth-child(2)::before {
-  content: "\e801"; }
+  content: ""; }
 .event-details-area .condition-right li:nth-child(3)::before {
-  content: "\e835"; }
+  content: ""; }
 
 .whole-wrap {
   background-color: #fff; }
@@ -3464,4 +3465,17 @@ h6 {
     .footer-text i:hover {
       color: #61c524; }
 
+.loading {
+  margin: 20px;
+  font-size: 20pt;
+}
+button .badge {
+  font-size: 16pt;
+  background-color: #56cdfc;
+  color: white;
+  font-weight: bold;
+}
+button {
+  margin: 10px;
+}
 /*# sourceMappingURL=main.css.map */
