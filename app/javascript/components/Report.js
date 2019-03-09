@@ -7,7 +7,8 @@ class Report extends React.Component {
     };
   }
   search() {
-    $('#profile').html('<div class="loading"><img src="/assets/loading.svg" alt="Loading..." title="Loading..." />Loading...</div>')
+    console.log("image_path", image_path("loading.svg"));
+    $('#profile').html('<div class="loading"><img src="'+image_path('loading.svg')+' alt="Loading..." title="Loading..." />Loading...</div>')
     fetch('/api/v1/search/index.json?url='+escape($('#url').val()))
       .then((response) => {return response.json()})
       .then((data) => {
@@ -117,7 +118,7 @@ class Report extends React.Component {
       </div>
       <div class="col-lg-7 col-md-6 col-sm-8 header-right">
         <div class="owl-carousel owl-banner">
-          <img class="img-fluid w-100" src="/assets/transgender-1.jpg" />
+          <img class="img-fluid w-100" src={image_path('transgender-1.jpg')} />
         </div>
         <div class="form-wrap">
           <p class="mb-20 text-white">Enter Your GoFundMe Page</p>
@@ -125,7 +126,7 @@ class Report extends React.Component {
               <div class="row">
                 <div class="col-md-7 wrap-left donation-input">
                   <div class="form-group">
-                    <input id="url" name="url" class="form-control" onblur="this.placeholder = 'https://www.gofundme.com/my-gofundme'" onfocus="this.placeholder = ''" placeholder="https://www.gofundme.com/my-gofundme" value={this.props.url} type="text" />
+                    <input id="url" name="url" class="form-control" placeholder="https://www.gofundme.com/my-gofundme" value={this.props.url} type="text" />
                   </div>
                 </div>
                 <div class="col-md-5 wrap-right">
