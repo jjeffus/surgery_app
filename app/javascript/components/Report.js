@@ -8,7 +8,13 @@ class Report extends React.Component {
   }
   search() {
     console.log("image_path", image_path("loading.svg"));
-    $('#profile').html('<div class="loading"><img src="'+image_path('loading.svg')+' alt="Loading..." title="Loading..." />Loading...</div>')
+    if ($('#url').val() == "") {
+      return;
+    }
+    if (! $('#url').val().match(/gf.me\/u\/\w+|www.gofundme.com\/\w+/)) {
+      return;
+    }
+    $('#profile').html('<div class="loading"><img src="'+image_path('loading.svg')+'" alt="Loading..." title="Loading..." />Loading...</div>')
     fetch('/api/v1/search/index.json?url='+escape($('#url').val()))
       .then((response) => {return response.json()})
       .then((data) => {
@@ -122,11 +128,11 @@ class Report extends React.Component {
         </div>
         <div class="form-wrap">
           <p class="mb-20 text-white">Enter Your GoFundMe Page</p>
-            <form autocomplete="off" class="form" role="form" action="/tool" method="post">
+            <form class="form" role="form" action="/tool" method="post">
               <div class="row">
                 <div class="col-md-7 wrap-left donation-input">
                   <div class="form-group">
-                    <input id="url" name="url" class="form-control" placeholder="https://www.gofundme.com/my-gofundme" value={this.props.url} type="text" />
+                    <input id="url" name="url" class="form-control" placeholder="https://www.gofundme.com/my-gofundme" type="text" defaultValue={this.props.url} />
                   </div>
                 </div>
                 <div class="col-md-5 wrap-right">
