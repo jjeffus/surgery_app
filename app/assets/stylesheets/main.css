@@ -3478,4 +3478,12 @@ button .badge {
 button {
   margin: 10px;
 }
+.form-check {
+  background-color: rgba(255,255,255,0.5);
+  padding: 20px;
+  margin: 20px;
+}
+.listed {
+  margin-left: 20px;
+}
 /*# sourceMappingURL=main.css.map */

@@ -175,8 +175,8 @@ class Report extends React.Component {
         <div class="form-wrap">
           <p class="mb-20 text-white">Enter Your GoFundMe Page</p>
             <form class="form" role="form" action="/tool" method="post">
-              <div class="row">
-                <div class="col-md-7 wrap-left donation-input">
+              <div class="row form-check">
+                <div class="col-md-10 wrap-left donation-input">
                   <div class="form-group">
                     <input id="url" name="url" class="form-control" placeholder="https://www.gofundme.com/my-gofundme" type="text" defaultValue={this.props.url} />
                   </div>
@@ -185,6 +185,12 @@ class Report extends React.Component {
                   <div class="input-group dates-wrap">
                     <button class="primary-btn white" type="submit">Check</button>
                   </div>
+                </div>
+                <div class="col-md-6 wrap-left listed">
+                  <input class="form-check-input" type="checkbox" id="listed" name="listed" defaultChecked="checked" />
+                  <label class="form-check-label" htmlFor="listed">
+                    List my campaign in the <a href="/index">Index</a>.
+                  </label>
                 </div>
               </div>
             </form>
