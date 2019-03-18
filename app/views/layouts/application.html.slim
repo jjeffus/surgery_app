@@ -26,16 +26,8 @@ html.no-js[lang="zxx"]
       .container
         .row.align-items-center.justify-content-between.d-flex
           #logo
-            a[href="index.html"]
+            a[href="/"]
               = image_tag "logo.png"
-          nav#nav-menu-container
-            ul.nav-menu
-              li.menu-active
-                a[href="/"]
-                  | Home
-              li
-                a[href="/janet"]
-                  | Janet
     = yield
     footer.footer-area.section-gap
       .container
@@ -50,25 +42,12 @@ html.no-js[lang="zxx"]
                 |  Copyright ©
                 script
                   | document.write(new Date().getFullYear());
-                |  All rights reserved | This template is made with
-                i.fa.fa-heart-o[aria-hidden="true"]
-                |  by
+                |  All rights reserved | The template was made by
                 a[href="https://colorlib.com" target="_blank"]
-                  | Colorlib
-          .col-lg-5.col-md-6.col-sm-6
-            .single-footer-widget
-              h6
-                | Newsletter
-              p
-                | Stay update with our latest
-              #mc_embed_signup
-                form.form-inline[target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get"]
-                  input.form-control[name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '" required="" type="email"]
-                  button.click-btn.btn.btn-default
-                    i.fa.fa-long-arrow-right[aria-hidden="true"]
-                  div[style="position: absolute; left: -5000px;"]
-                    input[name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text"]
-                  .info
+                  | Colorlib.
+                | Help make a better website! Edit the
+                a[href="https://github.com/jjeffus/surgeryforlife" target="_blank"]
+                  | Github!
           .col-lg-2.col-md-6.col-sm-6.social-widget
             .single-footer-widget
               h6
