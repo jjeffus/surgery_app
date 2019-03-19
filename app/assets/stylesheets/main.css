@@ -2148,7 +2148,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     display: block;
     font-size: 24px;
     margin-bottom: 30px; }
-  .collection-box p {
+  .collection-box  {
     margin-bottom: 0; }
   .collection-box:hover {
     cursor: pointer;
@@ -3457,14 +3457,17 @@ h6 {
     margin-top: 30px; } }
 .footer-text {
   padding-top: 20px;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+}
   .footer-text a,
   .footer-text i {
-    color: #46dbb7; }
+    color: #eee; }
     .footer-text a:hover,
     .footer-text i:hover {
-      color: #61c524; }
-
+      color: #eee; }
+footer {
+    color: #eee;
+}
 .loading {
   margin: 20px;
   font-size: 20pt;
