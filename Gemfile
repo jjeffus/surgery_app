@@ -40,7 +40,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'webpacker'
 gem 'react-rails'
 gem 'slim-rails'
-gem 'bootstrap', '~> 4.2.1'
+gem "bootstrap", ">= 4.3.1"
 gem 'jquery-rails', :git => 'https://github.com/rails/jquery-rails.git'
 gem 'textmood', :git => 'https://github.com/stiang/textmood.git'
 gem 'textstat'
