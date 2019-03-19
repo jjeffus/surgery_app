@@ -67,11 +67,6 @@ GEM
     arel (9.0.0)
     autoprefixer-rails (9.4.7)
       execjs
-    axlsx (3.0.0.pre)
-      htmlentities (~> 4.3, >= 4.3.4)
-      mimemagic (~> 0.3)
-      nokogiri (~> 1.8, >= 1.8.2)
-      rubyzip (~> 1.2, >= 1.2.1)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -129,7 +124,6 @@ GEM
     gofundme (0.1.0)
       nokogiri
       rest-client (>= 1.8.0)
-    htmlentities (4.3.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (1.5.3)
@@ -292,7 +286,6 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake (~> 5.0)
-  axlsx
   better_errors
   binding_of_caller
   bootsnap (>= 1.1.0)
