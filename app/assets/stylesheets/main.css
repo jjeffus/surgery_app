@@ -45,6 +45,7 @@
 .front-page-outtake {
   font-size: 130%;
   margin: 20px;
+  margin-top: 0px;
   padding: 20px;
   border: 1px solid #777777;
   float: left;
