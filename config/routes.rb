@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get '/wake/now(.:format)', to: 'wake#now'
-  get "/tool", to: "review#index"
-  post "/tool", to: "review#index"
+  get "/tool", to: "tool#index"
+  post "/tool", to: "tool#index"
   namespace :api do
     namespace :v1 do
      resources :projects, only: [:create, :destroy, :update]

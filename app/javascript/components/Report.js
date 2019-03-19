@@ -6,21 +6,36 @@ class Report extends React.Component {
     this.state = {
     };
   }
-  search() {
-    console.log("image_path", image_path("loading.svg"));
+
+  now() {
+    var today = new Date();
+    var date = today.getFullYear()+'-'+("0" + (today.getMonth()+1)).slice(-2)+'-'+("0" + today.getDate()).slice(-2);
+    var time = ("0" + today.getHours()).slice(-2) + ":" + ("0" + today.getMinutes()).slice(-2) + ":" + ("0" + today.getSeconds()).slice(-2);
+    var iso8601 = date+"T"+time;
+    return iso8601;
+  }
+
+  hasUrl() {
     if ($('#url').val() == "") {
-      return;
+      return false;
     }
     if (! $('#url').val().match(/gf.me\/u\/\w+|www.gofundme.com\/\w+/)) {
-      return;
+      return false;
     }
-    $('#profile').html('<div class="loading"><img src="'+image_path('loading.svg')+'" alt="Loading..." title="Loading..." />Loading...</div>')
-    fetch('/api/v1/search/index.json?url='+escape($('#url').val()))
-      .then((response) => {return response.json()})
-      .then((data) => {
-        console.log("data", data);
-        this.setState(data)
+    return true;
+  }
+
+  search() {
+    console.log("image_path", image_path("loading.svg"));
+    if (this.hasUrl()) {
+      $('#profile').html('<div class="loading"><img src="'+image_path('loading.svg')+'" alt="Loading..." title="Loading..." />Loading...</div>')
+      fetch('/api/v1/search/index.json?url='+escape($('#url').val()))
+        .then((response) => {return response.json()})
+        .then((data) => {
+          console.log("data", data);
+          this.setState(data)
       });
+    }
   }
   componentDidUpdate(){
     console.log("componentDidUpdate()");
@@ -28,7 +43,17 @@ class Report extends React.Component {
     $('[data-toggle="popover"]').popover();
   }
   componentDidMount(){
-    this.search();
+    if (this.hasUrl()) {
+      this.search();
+    } else {
+      // If there is no URL wake up the Heroku instance since it's a free node
+      // and takes a few seconds to wake.
+      fetch('/wake/now.json?clientTime='+escape(this.now()))
+        .then((response) => {return response.json()})
+        .then((data) => {
+          console.log("wake called");
+      });
+    }
   }
   render () {
     console.log("rendering", this.state.project);
@@ -165,6 +190,7 @@ class Report extends React.Component {
   <div class="container-fluid">
     <div class="row d-flex align-items-center justify-content-center">
       <div class="header-left col-lg-5 col-md-6">
+        <br />
         <h1> Reach<br /> your goal!</h1>
         <p class="pt-20 pb-20"> Get the help you need with your GoFundMe campaign to reach your goal in record time. Enter your GoFundMe campaign in the form provided.</p>
       </div>
