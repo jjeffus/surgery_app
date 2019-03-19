@@ -42,6 +42,14 @@
   color: #777777;
   font-weight: 300; }
 
+.front-page-outtake {
+  font-size: 130%;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #777777;
+  float: left;
+}
+
 body {
   color: #777777;
   font-family: "Roboto", sans-serif;
