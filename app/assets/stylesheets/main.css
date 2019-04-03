@@ -2012,10 +2012,14 @@ body.mobile-nav-active #mobile-nav-toggle {
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s; }
   .single-cause .top {
-    padding: 30px; }
+    padding: 30px;
+    padding-bottom: 10px;
+  }
     @media (max-width: 576px) {
       .single-cause .top {
-        padding: 15px; } }
+        padding: 15px;
+        padding-bottom: 10px;
+         } }
   .single-cause .thumb {
     overflow: hidden;
     margin-bottom: 30px; }
@@ -2069,13 +2073,20 @@ body.mobile-nav-active #mobile-nav-toggle {
           .single-cause .middle .skill_main .skill_item .progress .progress-bar.progress-bar3 {
             background: #a978e0; }
   .single-cause .bottom {
-    padding: 30px; }
+    padding: 30px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
     @media (max-width: 576px) {
       .single-cause .bottom {
-        padding: 15px; } }
+        padding: 15px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        } }
     .single-cause .bottom .primary-btn {
       font-size: 13px;
-      padding: 0 30px; }
+      padding: 0 30px;
+    }
       @media (max-width: 576px) {
         .single-cause .bottom .primary-btn {
           padding: 0 20px; } }
@@ -3498,5 +3509,17 @@ button {
 }
 .listed {
   margin-left: 20px;
+}
+#view_on {
+  margin-top: 5px;
+}
+#view_on a:hover {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+.blog-pagination {
+  max-width: 30% !important;
 }
 /*# sourceMappingURL=main.css.map */
