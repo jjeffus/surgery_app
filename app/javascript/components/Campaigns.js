@@ -21,11 +21,43 @@ function gotoPage(page, cursor) {
   location.search = $.param(queryParameters);
 }
 
+function get_pagination(c, m) {
+    var current = c,
+        last = m,
+        delta = 2,
+        left = current - delta,
+        right = current + delta + 1,
+        range = [],
+        rangeWithDots = [],
+        l;
+
+    for (let i = 1; i <= last; i++) {
+        if (i == 1 || i == last || i >= left && i < right) {
+            range.push(i);
+        }
+    }
+
+    for (let i of range) {
+        if (l) {
+            if (i - l === 2) {
+                rangeWithDots.push(l + 1);
+            } else if (i - l !== 1) {
+                rangeWithDots.push('...');
+            }
+        }
+        rangeWithDots.push(i);
+        l = i;
+    }
+
+    return rangeWithDots;
+}
+
 class Campaigns extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       projects: [],
+      cursorView: false,
       pagination: {
         cursor: parseInt(props.cursor),
         page: parseInt(props.page)
@@ -68,11 +100,17 @@ class Campaigns extends React.Component {
   }
 
   view(id) {
+    this.state.cursorView = true;
+    this.state.pagination.cursor = id;
     console.log("Got", id);
+    this.setState(this.state);
   }
 
   close() {
+    this.state.cursorView = false;
+    this.state.pagination.cursor = 0;
     console.log("Close");
+    this.setState(this.state);
   }
 
   componentDidMount(){
@@ -89,12 +127,13 @@ class Campaigns extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log("componentDidUpdate()");
+    console.log("componentDidUpdate()", this.state.pagination.cursor);
     var pagination = this.state.pagination;
     window.location.hash = parseInt(pagination.cursor);
     var project = this.state.projects[pagination.cursor];
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
+    window.scrollTo(0,0);
   }
 
   render () {
@@ -117,29 +156,38 @@ class Campaigns extends React.Component {
     var nextPage = undefined;
     var pagination = this.state.pagination;
     var pages = [];
+    console.log("interface", this.state.cursorView);
+    var detailHidden = "d-none";
+    var indexHidden = "";
+    if (this.state.cursorView) {
+      detailHidden = "";
+      indexHidden = "d-none";
+    }
+
     if (pagination.pages > 1) {
-      for (var i=1; i <= pagination.pages; i++) {
-        console.log(i, "page + ", i);
+      var page_list = get_pagination(pagination.page, pagination.pages);
+      console.log(page_list);
+      for (var i=0; i < page_list.length; i++) {
+        console.log(i, "page + ", page_list[i]);
         var active = "";
-        if (i == parseInt(pagination.page)) {
+        if (pagination.page == parseInt(page_list[i])) {
+          // console.log("page", pagination.page, page_list[i], active);
           active = "active";
+          prevPage = parseInt(page_list[i-1]);
+          nextPage = parseInt(page_list[i+1]);
         }
-        if (i == 1) {
-          var page = (
-            <li class={"page-item "+active}><a href={"/campaigns?page="+i} class="page-link">{i}</a></li>
+        var page = (<li></li>);
+        if (page_list[i] == "...") {
+          page = (
+            <li class="page-item ">{page_list[i]}</li>
           );
-          pages.push(page);
-          nextPage = 2
-        } else if (i == pagination.pages) {
-          prevPage = parseInt(pagination.pages) - 1;
         } else {
-          nextPage = (i+1);
-          prevPage = (i-1);
-          var page = (
-            <li class={"page-item "+active}><a href={"/campaigns?page="+i} class="page-link">{i}</a></li>
+          console.log("page", pagination.page, page_list[i], active);
+          page = (
+            <li class={"page-item "+active}><a href={"/campaigns?page="+page_list[i]} class="page-link">{page_list[i]}</a></li>
           );
-          pages.push(page);
         }
+        pages.push(page);
       }
     }
 
@@ -162,32 +210,12 @@ class Campaigns extends React.Component {
       </li>
     );
 
-    var rows = [];
-    var row = [];
-    for (var j=1; j <= pages.length; j++) {
-      if ((j % 12) == 0) {
-        rows.push(row)
-        row = [pages[j-1]];
-      } else {
-        row.push(pages[j-1]);
-      }
-    }
-    rows.push(row);
-
-    var parts = [];
-    $.each(rows, function (i,e){
-      var pag = (
-        <ul class="pagination">
-          {e}
-        </ul>
-      );
-      parts.push(pag);
-    });
-
     var pagination = (
       <div class="row">
         <nav class="blog-pagination justify-content-center">
-          {parts}
+          <ul class="pagination float-left list-inline">
+            {pages}
+          </ul>
         </nav>
       </div>
     );
@@ -230,7 +258,7 @@ class Campaigns extends React.Component {
           );
         });
         profile = (
-        <section key={project.gofundme_key} class="condition-area event-details-area section-gap">
+        <section key={project.gofundme_key} class={"condition-area event-details-area section-gap "+detailHidden}>
           <div class="container">
             <div class="row align-items-center justify-content-center">
               <div class="col-lg-6 col-md-8 col-sm-10">
@@ -331,13 +359,13 @@ class Campaigns extends React.Component {
     });
     return (
 <React.Fragment>
-<section class="causes-area section-gap">
+<section class={"causes-area section-gap "+indexHidden}>
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-7 section-title">
 				<h2>Winning Campaigns</h2>
 				<p>
-					Here are active and previously successfull GoFundme campaigns.
+					Here are active and successfull GoFundme campaigns.
 				</p>
 			</div>
 		</div>

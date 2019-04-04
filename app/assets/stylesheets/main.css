@@ -3523,7 +3523,7 @@ a:hover {
   display: block !important;
   float: left;
   clear: right !important;
-  width: 200px;
+  width: 500px;
 }
 ul.pagination {
   clear: both;
