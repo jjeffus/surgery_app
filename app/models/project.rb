@@ -8,6 +8,10 @@ class Project < ApplicationRecord
   has_many :updates
   after_create :add_statistics
 
+  def self.by_amount
+    self.where("amount is not null and english > 0 and category in ('mtf', 'ftm')").order("amount desc")
+  end
+
   def self.new_from_gofundme(project)
     p = Project.where(:gofundme_key => project[:key]).first || Project.new
     updates = project[:updates]
