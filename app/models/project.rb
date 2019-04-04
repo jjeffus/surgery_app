@@ -9,7 +9,7 @@ class Project < ApplicationRecord
   after_create :add_statistics
 
   def self.by_amount
-    self.where("amount is not null and english > 0 and category in ('mtf', 'ftm')").order("amount desc")
+    self.where("amount is not null and category in ('mtf', 'ftm')").order("amount desc")
   end
 
   def self.new_from_gofundme(project)
