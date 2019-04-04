@@ -2,7 +2,7 @@ class Api::V1::ProjectsController < ApplicationController
   def index
     @page = params[:page].to_i
     # @projects = Project.where('english > 0 and category in ("mtf", "ftm") or category is null').paginate(:page => @page)
-    @projects = Project.where("category in ('mtf', 'ftm')").paginate(:page => @page)
+    @projects = Project.where("category in ('mtf', 'ftm')").order("amount desc").paginate(:page => @page)
     render 'index'
   end
 
