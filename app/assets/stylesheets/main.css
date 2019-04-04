@@ -3519,7 +3519,17 @@ button {
 a:hover {
   text-decoration: none;
 }
-.blog-pagination {
-  max-width: 30% !important;
+.pagination {
+  display: block !important;
+  float: left;
+  clear: right !important;
+  width: 200px;
+}
+ul.pagination {
+  clear: both;
+}
+.pagination li {
+  display: block;
+  float: left;
 }
 /*# sourceMappingURL=main.css.map */

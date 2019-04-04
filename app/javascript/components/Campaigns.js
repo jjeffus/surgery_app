@@ -142,26 +142,52 @@ class Campaigns extends React.Component {
         }
       }
     }
+
+    pages.unshift(
+        <li class="page-item">
+          <a href="#" class="page-link" aria-label="Previous">
+            <span aria-hidden="true">
+              <span class="lnr lnr-chevron-left"></span>
+            </span>
+          </a>
+        </li>
+    );
+    pages.push(
+      <li class="page-item">
+        <a href="#" class="page-link" aria-label="Next">
+          <span aria-hidden="true">
+            <span class="lnr lnr-chevron-right"></span>
+          </span>
+        </a>
+      </li>
+    );
+
+    var rows = [];
+    var row = [];
+    for (var j=1; j <= pages.length; j++) {
+      if ((j % 12) == 0) {
+        rows.push(row)
+        row = [pages[j-1]];
+      } else {
+        row.push(pages[j-1]);
+      }
+    }
+    rows.push(row);
+
+    var parts = [];
+    $.each(rows, function (i,e){
+      var pag = (
+        <ul class="pagination">
+          {e}
+        </ul>
+      );
+      parts.push(pag);
+    });
+
     var pagination = (
       <div class="row">
-        <nav class="blog-pagination justify-content-center d-flex">
-          <ul class="pagination">
-            <li class="page-item">
-              <a href="#" class="page-link" aria-label="Previous">
-                <span aria-hidden="true">
-                  <span class="lnr lnr-chevron-left"></span>
-                </span>
-              </a>
-            </li>
-            {pages}
-            <li class="page-item">
-              <a href="#" class="page-link" aria-label="Next">
-                <span aria-hidden="true">
-                  <span class="lnr lnr-chevron-right"></span>
-                </span>
-              </a>
-            </li>
-          </ul>
+        <nav class="blog-pagination justify-content-center">
+          {parts}
         </nav>
       </div>
     );
@@ -315,6 +341,7 @@ class Campaigns extends React.Component {
 				</p>
 			</div>
 		</div>
+    {pagination}
 		<div class="row">
 			{listings}
 		</div>
