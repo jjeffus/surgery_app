@@ -37,10 +37,69 @@ class Report extends React.Component {
       });
     }
   }
+
+  loadGraph(graph){
+    var data = [];
+    var labels = [];
+    $.each(eval("this.state.graphs."+graph), function(i,e){
+      data.push(e[1]);
+      var label = e[2].toFixed(2) + "-" + e[3].toFixed(2);
+      labels.push(label);
+    });
+    var ctx = $('#'+graph);
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '# in range',
+                data: data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+  }
+
   componentDidUpdate(){
-    console.log("componentDidUpdate()");
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
+    var obj = this;
+    var state=obj.state;
+    $.each($('.graph'), function(i,e){
+      var id = $(e).attr('data-id');
+      if (id == "sentiment") {
+        return;
+      }
+      obj.loadGraph(id);
+    });
   }
   componentDidMount(){
     if (this.hasUrl()) {
@@ -56,14 +115,11 @@ class Report extends React.Component {
     }
   }
   render () {
-    console.log("rendering", this.state.project);
-    console.log("props", this.props);
     var profile = (<div id="profile"></div>);
     var project = {};
     var suggestions = (<div></div>);
     if (this.state && this.state.project) {
       project = this.state.project;
-      console.log("project", project);
       var image = (<div></div>);
       if (project.image) {
         image = (<img alt="Project Image" class="img-fluid mx-auto d-block" src={project.image} />)
@@ -90,9 +146,14 @@ class Report extends React.Component {
       $.each(labels, function(i,e){
         var label = i.replace(/(_|^)/g, ' ')
         label = label.replace(/\b\w/g, l => l.toUpperCase())
+        var em = (<canvas class="graph" data-id={i} id={i}></canvas>);
+        if (i == "sentiment") {
+          em = (<div></div>);
+        }
         elements.push(
           <li>
             <button type="button" class="btn btn-lg btn-light" data-toggle="popover" data-html="true"  data-trigger="focus" data-placement="bottom" data-content={labels[i][0] + (labels[i][1] ? " <a href=\""+labels[i][1]+"\" target=\"_blank\">Read more</a>" : "")}>{label+" "}<span class="badge">{project[i]}</span></button>
+            {em}
           </li>
         );
       });
@@ -109,9 +170,6 @@ class Report extends React.Component {
               <div class="condition-right">
                 <h2>{project.title}</h2>
                 <p>{project.story_text}</p>
-                <ul>
-                  {elements}
-                </ul>
               </div>
             </div>
           </div>
@@ -125,8 +183,15 @@ class Report extends React.Component {
               <div class="col-md-7 section-title">
                 <h2>Congratulations!</h2>
                 <p>You set up a GoFundMe! That's just the first step to seeing your surgical needs being met. You can do this! Below is a report on how your GoFundMe compares with winning GoFundMe transgender surgery campaigns.</p>
-                </div>
               </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                <ul>
+                  {elements}
+                </ul>
+              </div>
+            </div>
               <div class="row">
                 <div class="col-lg-12 col-md-6">
                   <div class="single-cause">
@@ -211,12 +276,6 @@ class Report extends React.Component {
                   <div class="input-group dates-wrap">
                     <button class="primary-btn white" type="submit">Check</button>
                   </div>
-                </div>
-                <div class="col-md-6 wrap-left listed">
-                  <input class="form-check-input" type="checkbox" id="listed" name="listed" defaultChecked="checked" />
-                  <label class="form-check-label" htmlFor="listed">
-                    List my campaign in the <a href="/index">Index</a>.
-                  </label>
                 </div>
               </div>
             </form>

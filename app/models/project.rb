@@ -9,7 +9,25 @@ class Project < ApplicationRecord
   after_create :add_statistics
 
   def self.by_amount
-    self.where("amount is not null and category in ('mtf', 'ftm')").order("amount desc")
+    self.where("amount is not null and category in ('mtf', 'ftm')")
+  end
+
+  def self.graph(column)
+    min = self.by_amount.minimum(column)
+    max = self.by_amount.maximum(column)
+    total = self.by_amount.count
+    spread = max - min
+    steps = 8.0
+    counts = []
+    1.upto(steps).each do |num|
+      step = (num / steps) * spread
+      one = (1 / steps) * spread
+      smax = min + step
+      smin = smax - one
+      cnt = self.by_amount.where("#{column} >= #{smin} and #{column} <= #{smax}").count
+      counts.push [cnt / total.to_f,cnt,smin,smax]
+    end
+    counts
   end
 
   def self.new_from_gofundme(project)
@@ -20,6 +38,8 @@ class Project < ApplicationRecord
     project.delete :updates
     project.delete :key
     project.delete :category
+    project.delete :created_at
+    project.delete :updated_at
     project.each_key do |key|
       p.send("#{key}=", project[key])
     end

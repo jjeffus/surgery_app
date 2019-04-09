@@ -50,3 +50,4 @@ gem "font-awesome-rails"
 gem 'will_paginate', '~> 3.1.0'
 gem 'gofundme'
 gem 'airbrake', '~> 5.0'
+gem 'chartjs-ror'
